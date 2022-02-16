@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nowPlayingFragment">
+
+    <fragment
+        android:id="@+id/nowPlayingFragment"
+        android:name="com.asterisk.movieworld.ui.now_playing.NowPlayingFragment"
+        android:label="fragment_now_playing"
+        tools:layout="@layout/fragment_now_playing" />
+    <fragment
+        android:id="@+id/saveMoviesFragment"
+        android:name="com.asterisk.movieworld.ui.saves.SaveMoviesFragment"
+        android:label="fragment_save_movies"
+        tools:layout="@layout/fragment_save_movies" />
+</navigation>
