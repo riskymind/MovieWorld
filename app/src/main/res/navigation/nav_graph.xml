@@ -9,10 +9,32 @@
         android:id="@+id/nowPlayingFragment"
         android:name="com.asterisk.movieworld.ui.now_playing.NowPlayingFragment"
         android:label="fragment_now_playing"
-        tools:layout="@layout/fragment_now_playing" />
+        tools:layout="@layout/fragment_now_playing" >
+        <action
+            android:id="@+id/action_nowPlayingFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/saveMoviesFragment"
         android:name="com.asterisk.movieworld.ui.saves.SaveMoviesFragment"
         android:label="fragment_save_movies"
-        tools:layout="@layout/fragment_save_movies" />
+        tools:layout="@layout/fragment_save_movies" >
+        <action
+            android:id="@+id/action_saveMoviesFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.asterisk.movieworld.ui.details.MovieDetailFragment"
+        android:label="fragment_movie_detail"
+        tools:layout="@layout/fragment_movie_detail" >
+        <action
+            android:id="@+id/action_movieDetailFragment_to_trailerVideoFragment"
+            app:destination="@id/trailerVideoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trailerVideoFragment"
+        android:name="com.asterisk.movieworld.ui.details.TrailerVideoFragment"
+        android:label="fragment_trailer_video"
+        tools:layout="@layout/fragment_trailer_video" />
 </navigation>
