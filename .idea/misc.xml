@@ -6,11 +6,15 @@
         <entry key="app/src/main/res/drawable-v24/ic_save.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable-v24/ic_save_selected.xml" value="0.321025641025641" />
         <entry key="app/src/main/res/drawable-v24/ic_saves.xml" value="0.321025641025641" />
+        <entry key="app/src/main/res/drawable/background_fading_edge.xml" value="0.31851851851851853" />
+        <entry key="app/src/main/res/drawable/background_slider_indicator_active.xml" value="0.31851851851851853" />
+        <entry key="app/src/main/res/drawable/background_slider_indicator_inactive.xml" value="0.31851851851851853" />
         <entry key="app/src/main/res/drawable/background_tv_show.xml" value="0.31851851851851853" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28425925925925927" />
         <entry key="app/src/main/res/layout/fragment_movie_detail.xml" value="0.29583333333333334" />
         <entry key="app/src/main/res/layout/fragment_now_playing.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_save_movies.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/movie_image_item.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/movie_item.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/menu/menu.xml" value="0.3098958333333333" />
       </map>

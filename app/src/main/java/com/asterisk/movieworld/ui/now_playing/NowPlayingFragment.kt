@@ -34,7 +34,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
 
         movieAdapter = NowPlayingAdapter {
             val action =
-                NowPlayingFragmentDirections.actionNowPlayingFragmentToMovieDetailFragment()
+                NowPlayingFragmentDirections.actionNowPlayingFragmentToMovieDetailFragment(it.id.toString())
             findNavController().navigate(action)
         }
 

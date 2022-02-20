@@ -1,14 +1,247 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".ui.details.MovieDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/sliderViewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="@dimen/_160sdp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <View
+        android:id="@+id/viewFadingEdge"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/background_fading_edge"
+        app:layout_constraintBottom_toBottomOf="@+id/sliderViewPager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <me.relex.circleindicator.CircleIndicator3
+        android:id="@+id/layoutSliderIndicator"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/background_fading_edge"
+        android:gravity="end|center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/sliderViewPager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivPoster" />
+
+
+    <ProgressBar
+        android:id="@+id/posterProgressBar"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/sliderViewPager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.659" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ivPoster"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/sliderViewPager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sliderViewPager"
+        app:riv_corner_radius="@dimen/_5sdp" />
+
+    <TextView
+        android:id="@+id/tv_original_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:paddingTop="@dimen/_8sdp"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="@dimen/_13ssp"
+        app:layout_constraintStart_toEndOf="@+id/ivPoster"
+        app:layout_constraintTop_toBottomOf="@+id/layoutSliderIndicator"
+        tools:text="movie title" />
+
+    <TextView
+        android:id="@+id/tv_adult"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:includeFontPadding="false"
+        android:textColor="@color/colorTextOther"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_original_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_original_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_original_title"
+        tools:text="The CW" />
+
+    <TextView
+        android:id="@+id/tv_release_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_original_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_original_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_adult"
+        tools:text="2014-10-07" />
+
+    <TextView
+        android:id="@+id/tv_vote_count"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:includeFontPadding="false"
+        android:textColor="@android:color/holo_green_light"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toEndOf="@+id/tv_original_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_original_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_release_date"
+        tools:text="Running" />
+
+    <ScrollView
+        android:id="@+id/sv_readMore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivPoster">
+
+        <TextView
+            android:id="@+id/tv_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:textColor="@color/white"
+            tools:text="Running" />
+
+    </ScrollView>
+
+    <View
+        android:id="@+id/viewDivider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:background="@color/colorTextSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sv_readMore" />
+
+    <LinearLayout
+        android:id="@+id/layoutMisc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewDivider1">
+
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/ic_star"
+            app:tint="@color/colorTextOther" />
+
+        <TextView
+            android:id="@+id/tvRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="@dimen/_12ssp"
+            tools:text="rating" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:text="@string/u2022"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/_13ssp" />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="@dimen/_12ssp"
+            tools:text="Released" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewDivider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:background="@color/colorTextSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutMisc" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnWebsite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/website"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="@dimen/_12ssp"
+        app:backgroundTint="@color/colorAccent"
+        app:cornerRadius="@dimen/_5sdp"
+        app:layout_constraintEnd_toStartOf="@+id/btnTrailer"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewDivider2" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnTrailer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/trailer"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="@dimen/_12ssp"
+        app:backgroundTint="@color/colorTextOther"
+        app:cornerRadius="@dimen/_5sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnWebsite"
+        app:layout_constraintTop_toBottomOf="@+id/viewDivider2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -75,4 +75,10 @@ dependencies {
 
     // Rounded Image View
     implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    // Circle indicator
+    implementation 'me.relex:circleindicator:2.1.4'
+
+    // Show More text
+    implementation 'com.github.devendroid:ReadMoreOption:1.0.2'
 }
