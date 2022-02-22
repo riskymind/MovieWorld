@@ -3,12 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.details.TrailerVideoFragment">
+    android:background="@color/colorPrimary"
+    tools:context=".ui.trailer.TrailerVideoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+<!--    <com.google.android.youtube.player.YouTubePlayerView-->
+<!--        android:id="@+id/player"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="250dp" />-->
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_gravity="center" />
 
 </FrameLayout>

@@ -8,11 +8,14 @@ class MovieRepository @Inject constructor(
 ) {
 
     suspend fun getNowPlaying(apiKey: String, page: Int) =
-        movieApi.getNowPlayingMovies(apiKey, page)
+        movieApi.getNowPlayingMovies(apiKey = apiKey, page = page)
 
     suspend fun getMovieDetail(apiKey: String, movieId: String) =
         movieApi.getMovieDetail(movieId = movieId, apiKey = apiKey)
 
     suspend fun getMovieImages(apiKey: String, movieId: String) =
-        movieApi.getMovieImages(movieId, apiKey)
+        movieApi.getMovieImages(movieId = movieId, apiKey = apiKey)
+
+    suspend fun getMovieTrailer(apiKey: String, movieId: String) =
+        movieApi.getMovieTrailer(movieId = movieId, apiKey = apiKey)
 }

@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.asterisk.movieworld.R
 import com.asterisk.movieworld.data.services.tdbmmodel.MovieDetailResponse
@@ -119,6 +120,14 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.data = Uri.parse(movie.homepage)
                 startActivity(intent)
+            }
+
+            btnTrailer.setOnClickListener {
+                val action =
+                    MovieDetailFragmentDirections.actionMovieDetailFragmentToTrailerVideoFragment(
+                        movie.id.toString()
+                    )
+                findNavController().navigate(action)
             }
         }
     }

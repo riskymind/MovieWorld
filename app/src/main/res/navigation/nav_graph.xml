@@ -37,7 +37,11 @@
     </fragment>
     <fragment
         android:id="@+id/trailerVideoFragment"
-        android:name="com.asterisk.movieworld.ui.details.TrailerVideoFragment"
+        android:name="com.asterisk.movieworld.ui.trailer.TrailerVideoFragment"
         android:label="fragment_trailer_video"
-        tools:layout="@layout/fragment_trailer_video" />
+        tools:layout="@layout/fragment_trailer_video" >
+        <argument
+            android:name="movieId"
+            app:argType="string" />
+    </fragment>
 </navigation>
