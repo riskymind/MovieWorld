@@ -18,6 +18,7 @@ import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.asterisk.movieworld.R
 import com.asterisk.movieworld.data.services.tdbmmodel.MovieDetailResponse
 import com.asterisk.movieworld.databinding.FragmentMovieDetailBinding
@@ -36,6 +37,7 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
     private val binding get() = _binding!!
 
     private lateinit var posterAdapter: PosterAdapter
+    private lateinit var similarMovieAdapter: SimilarMovieAdapter
 
     private val viewModel by viewModels<MovieDetailViewModel>()
 
@@ -45,9 +47,14 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMovieDetailBinding.bind(view)
 
+        similarMovieAdapter = SimilarMovieAdapter()
+
+        setUpRecyclerView()
+
 
         viewModel.getMovieDetail(apiKey = API_KEY, movieId = id.movieId)
         viewModel.getMovieImages(apiKey = API_KEY, movieId = id.movieId)
+        viewModel.getSimilarMovie(apiKey = API_KEY, movieId = id.movieId)
 
         viewModel.movieImages.observe(viewLifecycleOwner) { response ->
             when (response) {
@@ -88,7 +95,27 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
                 }
             }
         }
+
+        viewModel.similarMovies.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Resource.Success -> {
+//                    hideProgressBar()
+                    response.data?.let {
+                        similarMovieAdapter.differ.submitList(it.results)
+                    }
+                }
+
+                is Resource.Error -> {
+
+                }
+
+                is Resource.Loading -> {
+//                    showProgressBar()
+                }
+            }
+        }
     }
+
 
     private fun displayMovieDetail(movie: MovieDetailResponse) {
         binding.apply {
@@ -146,6 +173,12 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
 
     private fun showProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun setUpRecyclerView() {
+        binding.rvSimilarMovies.apply {
+            adapter = similarMovieAdapter
+        }
     }
 
 

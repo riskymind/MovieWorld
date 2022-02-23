@@ -22,9 +22,13 @@ class TrailerVideoFragment : Fragment(R.layout.fragment_trailer_video) {
     private val viewModel by viewModels<TrailerFragmentViewModel>()
     private val id by navArgs<TrailerVideoFragmentArgs>()
 
+    private lateinit var trailerAdapter: TrailerAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentTrailerVideoBinding.bind(view)
+        trailerAdapter = TrailerAdapter()
+        setUpRecyclerview()
 
         viewModel.getTrailers(apiKey = API_KEY, movieId = id.movieId)
 
@@ -33,11 +37,7 @@ class TrailerVideoFragment : Fragment(R.layout.fragment_trailer_video) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let {
-                        Toast.makeText(
-                            requireContext(),
-                            it.results.size.toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        trailerAdapter.differ.submitList(it.results)
                     }
                 }
                 is Resource.Error -> {
@@ -46,6 +46,14 @@ class TrailerVideoFragment : Fragment(R.layout.fragment_trailer_video) {
                 is Resource.Loading -> {
                     showProgressBar()
                 }
+            }
+        }
+    }
+
+    private fun setUpRecyclerview() {
+        binding.apply {
+            rvTrailer.apply {
+                adapter = trailerAdapter
             }
         }
     }

@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context=".ui.trailer.TrailerVideoFragment">
 
-<!--    <com.google.android.youtube.player.YouTubePlayerView-->
-<!--        android:id="@+id/player"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="250dp" />-->
+    <!--    <com.google.android.youtube.player.YouTubePlayerView-->
+    <!--        android:id="@+id/player"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="250dp" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTrailer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
+        tools:listitem="@layout/similar_movie_item" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
 </FrameLayout>

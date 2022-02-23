@@ -1,9 +1,6 @@
 package com.asterisk.movieworld.data.services
 
-import com.asterisk.movieworld.data.services.tdbmmodel.MovieDetailResponse
-import com.asterisk.movieworld.data.services.tdbmmodel.MovieImageResponse
-import com.asterisk.movieworld.data.services.tdbmmodel.MovieResponse
-import com.asterisk.movieworld.data.services.tdbmmodel.MovieTrailerResponse
+import com.asterisk.movieworld.data.services.tdbmmodel.*
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -34,5 +31,11 @@ interface MovieApi {
         @Path("movie_id") movieId: String,
         @Query("api_key") apiKey: String
     ): Response<MovieTrailerResponse>
+
+    @GET("movie/{movie_id}/similar")
+    suspend fun getSimilarMovie(
+        @Path("movie_id") movieId: String,
+        @Query("api_key") apiKey: String
+    ): Response<SimilarMovieResponse>
 
 }

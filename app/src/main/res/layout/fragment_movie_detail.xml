@@ -244,4 +244,31 @@
         app:layout_constraintStart_toEndOf="@+id/btnWebsite"
         app:layout_constraintTop_toBottomOf="@+id/viewDivider2" />
 
+    <TextView
+        android:id="@+id/tvSimilar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:gravity="center"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:text="Similar movies"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="@dimen/_12ssp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnWebsite" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSimilarMovies"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSimilar"
+        tools:listitem="@layout/similar_movie_item" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
