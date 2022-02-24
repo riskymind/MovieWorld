@@ -6,10 +6,8 @@ import android.icu.text.CaseMap
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -37,7 +35,7 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
     private val binding get() = _binding!!
 
     private lateinit var posterAdapter: PosterAdapter
-    private lateinit var similarMovieAdapter: SimilarMovieAdapter
+    private lateinit var castAdapter: MovieCastAdapter
 
     private val viewModel by viewModels<MovieDetailViewModel>()
 
@@ -46,15 +44,15 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMovieDetailBinding.bind(view)
-
-        similarMovieAdapter = SimilarMovieAdapter()
+        setHasOptionsMenu(true)
+        castAdapter = MovieCastAdapter()
 
         setUpRecyclerView()
 
 
         viewModel.getMovieDetail(apiKey = API_KEY, movieId = id.movieId)
         viewModel.getMovieImages(apiKey = API_KEY, movieId = id.movieId)
-        viewModel.getSimilarMovie(apiKey = API_KEY, movieId = id.movieId)
+        viewModel.getMovieCredit(apiKey = API_KEY, movieId = id.movieId)
 
         viewModel.movieImages.observe(viewLifecycleOwner) { response ->
             when (response) {
@@ -96,12 +94,12 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
             }
         }
 
-        viewModel.similarMovies.observe(viewLifecycleOwner) { response ->
+        viewModel.movieCast.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
 //                    hideProgressBar()
                     response.data?.let {
-                        similarMovieAdapter.differ.submitList(it.results)
+                        castAdapter.differ.submitList(it.cast)
                     }
                 }
 
@@ -176,8 +174,26 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
     }
 
     private fun setUpRecyclerView() {
-        binding.rvSimilarMovies.apply {
-            adapter = similarMovieAdapter
+        binding.rvCast.apply {
+            adapter = castAdapter
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.detail_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.actionSimilar -> {
+                val action =
+                    MovieDetailFragmentDirections.actionMovieDetailFragmentToSimilarDialog(id.movieId)
+                findNavController().navigate(action)
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
     }
 

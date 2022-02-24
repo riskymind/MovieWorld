@@ -3,13 +3,13 @@ package com.asterisk.movieworld.data.services.tdbmmodel
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieResponse(
+data class UpcomingMovieResponse(
     @SerializedName("dates")
-    val dates: Dates,
+    val dates: DatesX,
     @SerializedName("page")
     val page: Int,
     @SerializedName("results")
-    val results: MutableList<Result>,
+    val results: List<Result>,
     @SerializedName("total_pages")
     val totalPages: Int,
     @SerializedName("total_results")

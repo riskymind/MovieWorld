@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
-class SimilarMovieAdapter() : RecyclerView.Adapter<SimilarMovieAdapter.SimilarMovieViewHolder>() {
+class SimilarMovieAdapter: RecyclerView.Adapter<SimilarMovieAdapter.SimilarMovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimilarMovieViewHolder {
         val layout =

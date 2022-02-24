@@ -2,6 +2,7 @@ package com.asterisk.movieworld.data.services.tdbmmodel
 
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ResultX(
     @SerializedName("id")
@@ -24,4 +25,4 @@ data class ResultX(
     val size: Int,
     @SerializedName("type")
     val type: String
-)
+): Serializable

@@ -7,8 +7,8 @@
         android:title="@string/now_playing_text" />
 
     <item
-        android:id="@+id/saveMoviesFragment"
+        android:id="@+id/upcomingMoviesFragment"
         android:icon="@drawable/ic_saves"
-        android:title="@string/saved_text" />
+        android:title="@string/upcoming" />
 
 </menu>

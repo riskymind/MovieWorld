@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.asterisk.movieworld.R
 import com.asterisk.movieworld.databinding.ActivityMainBinding
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         navController = navHostFragment.navController
 
+        setupActionBarWithNavController(navController)
+
         binding.bottomNav.setupWithNavController(navController)
 
 
@@ -33,11 +36,17 @@ class MainActivity : AppCompatActivity() {
                 R.id.movieDetailFragment -> {
                     binding.bottomNav.visibility = View.GONE
                 }
+                R.id.trailerVideoFragment -> {
+                    binding.bottomNav.visibility = View.GONE
+                }
                 else -> {
                     binding.bottomNav.visibility = View.VISIBLE
                 }
             }
         }
+    }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

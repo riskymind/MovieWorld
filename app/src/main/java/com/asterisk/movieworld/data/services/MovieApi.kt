@@ -38,4 +38,15 @@ interface MovieApi {
         @Query("api_key") apiKey: String
     ): Response<SimilarMovieResponse>
 
+    @GET("movie/{movie_id}/credits")
+    suspend fun getMovieCredit(
+        @Path("movie_id") movieId: String,
+        @Query("api_key") apiKey: String
+    ): Response<MovieCastResponse>
+
+    @GET("movie/upcoming")
+    suspend fun getUpcomingMovies(
+        @Query("api_key") apiKey: String
+    ): Response<UpcomingMovieResponse>
+
 }

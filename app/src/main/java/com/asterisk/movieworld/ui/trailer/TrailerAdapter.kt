@@ -1,26 +1,27 @@
 package com.asterisk.movieworld.ui.trailer
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.asterisk.movieworld.data.services.tdbmmodel.ResultX
-import com.asterisk.movieworld.databinding.SimilarMovieItemBinding
 import com.asterisk.movieworld.databinding.TrailerListItemBinding
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
-class TrailerAdapter : RecyclerView.Adapter<TrailerAdapter.TrailerViewHolder>() {
+class TrailerAdapter(
+    private val onItemClicked: (ResultX) -> Unit
+) : RecyclerView.Adapter<TrailerAdapter.TrailerViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrailerViewHolder {
         val layout =
             TrailerListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TrailerViewHolder(layout)
+        return TrailerViewHolder(layout, onClick = { position ->
+            val result = differ.currentList[position]
+            if (result != null) {
+                onItemClicked(result)
+            }
+        })
     }
 
     override fun onBindViewHolder(holder: TrailerViewHolder, position: Int) {
@@ -32,13 +33,30 @@ class TrailerAdapter : RecyclerView.Adapter<TrailerAdapter.TrailerViewHolder>() 
 
     override fun getItemCount() = differ.currentList.size
 
-    inner class TrailerViewHolder(private val binding: TrailerListItemBinding) :
+    inner class TrailerViewHolder(
+        private val binding: TrailerListItemBinding,
+        private val onClick: (Int) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(resultX: ResultX) {
             binding.apply {
                 tvName.text = resultX.name
                 tvSite.text = resultX.site
+            }
+        }
+
+        init {
+            binding.apply {
+                root.setOnClickListener {
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val item = differ.currentList[position]
+                        if (item != null) {
+                            onClick(position)
+                        }
+                    }
+                }
             }
         }
     }

@@ -19,6 +19,7 @@ class NowPlayingFragmentViewModel @Inject constructor(
 
     val nowPlaying: MutableLiveData<Resource<MovieResponse>> = MutableLiveData()
     var page = 1
+    var nowPlayingResponse: MovieResponse? = null
 
 
     init {
@@ -28,7 +29,6 @@ class NowPlayingFragmentViewModel @Inject constructor(
 
     private fun getNowPlaying(apiKey: String) = viewModelScope.launch {
         nowPlaying.postValue(Resource.Loading())
-
         try {
             val response = movieRepository.getNowPlaying(apiKey, page)
             nowPlaying.postValue(handleNowPlayingResponse(response))
@@ -40,7 +40,15 @@ class NowPlayingFragmentViewModel @Inject constructor(
     private fun handleNowPlayingResponse(response: Response<MovieResponse>): Resource<MovieResponse> {
         if (response.isSuccessful) {
             response.body()?.let {
-                return Resource.Success(it)
+                page++
+                if (nowPlayingResponse == null) {
+                    nowPlayingResponse = it
+                } else {
+                    val oldMovies = nowPlayingResponse?.results
+                    val newMovies = it.results
+                    oldMovies?.addAll(newMovies)
+                }
+                return Resource.Success(nowPlayingResponse ?: it)
             }
         }
 

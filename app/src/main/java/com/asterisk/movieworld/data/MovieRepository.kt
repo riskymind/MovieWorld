@@ -21,4 +21,10 @@ class MovieRepository @Inject constructor(
 
     suspend fun getSimilarMovies(apiKey: String, movieId: String) =
         movieApi.getSimilarMovie(movieId = movieId, apiKey = apiKey)
+
+    suspend fun getMoviesCredit(apiKey: String, movieId: String) =
+        movieApi.getMovieCredit(movieId = movieId, apiKey = apiKey)
+
+    suspend fun getUpcomingMovies(apiKey: String) =
+        movieApi.getUpcomingMovies(apiKey = apiKey)
 }

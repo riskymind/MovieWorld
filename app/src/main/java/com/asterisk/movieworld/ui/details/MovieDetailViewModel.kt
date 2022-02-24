@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.asterisk.movieworld.data.MovieRepository
+import com.asterisk.movieworld.data.services.tdbmmodel.MovieCastResponse
 import com.asterisk.movieworld.data.services.tdbmmodel.MovieDetailResponse
 import com.asterisk.movieworld.data.services.tdbmmodel.MovieImageResponse
 import com.asterisk.movieworld.data.services.tdbmmodel.SimilarMovieResponse
@@ -25,8 +26,9 @@ class MovieDetailViewModel @Inject constructor(
     private val _movieImages: MutableLiveData<Resource<MovieImageResponse>> = MutableLiveData()
     val movieImages: LiveData<Resource<MovieImageResponse>> = _movieImages
 
-    private val _similarMovies: MutableLiveData<Resource<SimilarMovieResponse>> = MutableLiveData()
-    val similarMovies: LiveData<Resource<SimilarMovieResponse>> = _similarMovies
+
+    private val _movieCast: MutableLiveData<Resource<MovieCastResponse>> = MutableLiveData()
+    val movieCast: LiveData<Resource<MovieCastResponse>> = _movieCast
 
     fun getMovieDetail(apiKey: String, movieId: String) = viewModelScope.launch {
         _details.postValue(Resource.Loading())
@@ -49,11 +51,12 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
-    fun getSimilarMovie(apiKey: String, movieId: String) = viewModelScope.launch {
-        _similarMovies.postValue(Resource.Loading())
+
+    fun getMovieCredit(apiKey: String, movieId: String) = viewModelScope.launch {
+        _movieCast.postValue(Resource.Loading())
         try {
-            val response = movieRepository.getSimilarMovies(apiKey = apiKey, movieId = movieId)
-            _similarMovies.postValue(handleSimilarMoviesResponse(response))
+            val response = movieRepository.getMoviesCredit(apiKey = apiKey, movieId = movieId)
+            _movieCast.postValue(handleMoviesCastResponse(response))
         } catch (e: Exception) {
             throw e
         }
@@ -79,7 +82,7 @@ class MovieDetailViewModel @Inject constructor(
         return Resource.Error(response.message())
     }
 
-    private fun handleSimilarMoviesResponse(response: Response<SimilarMovieResponse>): Resource<SimilarMovieResponse> {
+    private fun handleMoviesCastResponse(response: Response<MovieCastResponse>): Resource<MovieCastResponse> {
         if (response.isSuccessful) {
             response.body()?.let {
                 return Resource.Success(it)
@@ -88,5 +91,6 @@ class MovieDetailViewModel @Inject constructor(
 
         return Resource.Error(response.message())
     }
+
 
 }

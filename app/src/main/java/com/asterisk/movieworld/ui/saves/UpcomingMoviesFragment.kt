@@ -1,53 +1,48 @@
-package com.asterisk.movieworld.ui.now_playing
+package com.asterisk.movieworld.ui.saves
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.AbsListView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.asterisk.movieworld.R
-import com.asterisk.movieworld.databinding.FragmentNowPlayingBinding
+import com.asterisk.movieworld.databinding.FragmentUpcomingMoviesBinding
 import com.asterisk.movieworld.others.Resource
 import com.asterisk.movieworld.shared.NowPlayingAdapter
+import com.asterisk.movieworld.ui.now_playing.NowPlayingFragmentDirections
+import com.asterisk.movieworld.ui.now_playing.NowPlayingFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
-class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
+class UpcomingMoviesFragment : Fragment(R.layout.fragment_upcoming_movies) {
 
-    private lateinit var movieAdapter: NowPlayingAdapter
-
-    private var _binding: FragmentNowPlayingBinding? = null
+    private var _binding: FragmentUpcomingMoviesBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<NowPlayingFragmentViewModel>()
+    private lateinit var upcomingAdapter: NowPlayingAdapter
+    private val viewModel by viewModels<UpcomingFragmentViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentUpcomingMoviesBinding.bind(view)
 
-        _binding = FragmentNowPlayingBinding.bind(view)
-
-        movieAdapter = NowPlayingAdapter {
+        upcomingAdapter = NowPlayingAdapter {
             val action =
-                NowPlayingFragmentDirections.actionNowPlayingFragmentToMovieDetailFragment(it.id.toString())
+                UpcomingMoviesFragmentDirections.
+                actionSaveMoviesFragmentToMovieDetailFragment(it.id.toString())
             findNavController().navigate(action)
         }
 
         setUpRecyclerView()
 
-        viewModel.nowPlaying.observe(viewLifecycleOwner) { response ->
+        viewModel.upComing.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let {
-                        movieAdapter.differ.submitList(it.results)
+                        upcomingAdapter.differ.submitList(it.results)
                     }
                 }
 
@@ -65,30 +60,11 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
                 }
             }
         }
-
-    }
-
-    var isLoading = false
-    var isLastPage = false
-    var isScrolling = false
-
-    val rvScrollListener = object : RecyclerView.OnScrollListener() {
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            super.onScrollStateChanged(recyclerView, newState)
-            // checking if it scrolling
-            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                isScrolling = true
-            }
-        }
-
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            super.onScrolled(recyclerView, dx, dy)
-        }
     }
 
     private fun setUpRecyclerView() {
         binding.rvMovies.apply {
-            adapter = movieAdapter
+            adapter = upcomingAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
     }

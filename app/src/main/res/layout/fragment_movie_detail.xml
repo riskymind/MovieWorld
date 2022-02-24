@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -122,25 +124,20 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_release_date"
         tools:text="Running" />
 
-    <ScrollView
-        android:id="@+id/sv_readMore"
+
+    <TextView
+        android:id="@+id/tv_overview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPoster">
+        app:layout_constraintTop_toBottomOf="@+id/ivPoster"
+        tools:text="Running" />
 
-        <TextView
-            android:id="@+id/tv_overview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:textColor="@color/white"
-            tools:text="Running" />
-
-    </ScrollView>
 
     <View
         android:id="@+id/viewDivider1"
@@ -152,14 +149,14 @@
         android:background="@color/colorTextSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sv_readMore" />
+        app:layout_constraintTop_toBottomOf="@id/tv_overview" />
 
     <LinearLayout
         android:id="@+id/layoutMisc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_2sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:gravity="center"
         android:orientation="horizontal"
@@ -167,9 +164,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/viewDivider1">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnWebsite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/website"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="@dimen/_12ssp"
+            app:backgroundTint="@color/colorAccent"
+            app:cornerRadius="@dimen/_5sdp" />
+
         <ImageView
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_5sdp"
             android:src="@drawable/ic_star"
             app:tint="@color/colorTextOther" />
 
@@ -199,6 +207,17 @@
             android:textSize="@dimen/_12ssp"
             tools:text="Released" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTrailer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:text="@string/trailer"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="@dimen/_12ssp"
+            app:backgroundTint="@color/colorTextOther"
+            app:cornerRadius="@dimen/_5sdp" />
+
     </LinearLayout>
 
     <View
@@ -206,46 +225,16 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_2sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:background="@color/colorTextSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutMisc" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnWebsite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:text="@string/website"
-        android:textColor="@color/colorTextPrimary"
-        android:textSize="@dimen/_12ssp"
-        app:backgroundTint="@color/colorAccent"
-        app:cornerRadius="@dimen/_5sdp"
-        app:layout_constraintEnd_toStartOf="@+id/btnTrailer"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewDivider2" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnTrailer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:text="@string/trailer"
-        android:textColor="@color/colorTextSecondary"
-        android:textSize="@dimen/_12ssp"
-        app:backgroundTint="@color/colorTextOther"
-        app:cornerRadius="@dimen/_5sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnWebsite"
-        app:layout_constraintTop_toBottomOf="@+id/viewDivider2" />
 
     <TextView
-        android:id="@+id/tvSimilar"
+        android:id="@+id/tvCast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
@@ -253,22 +242,22 @@
         android:gravity="center"
         android:paddingStart="@dimen/_10sdp"
         android:paddingEnd="@dimen/_10sdp"
-        android:text="Similar movies"
+        android:text="Movie Cast"
         android:textColor="@color/colorTextPrimary"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnWebsite" />
+        app:layout_constraintTop_toBottomOf="@+id/viewDivider2" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSimilarMovies"
+        android:id="@+id/rvCast"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSimilar"
-        tools:listitem="@layout/similar_movie_item" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCast"
+        tools:listitem="@layout/movie_cast_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

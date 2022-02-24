@@ -1,5 +1,6 @@
 package com.asterisk.movieworld.ui.trailer
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -27,7 +28,11 @@ class TrailerVideoFragment : Fragment(R.layout.fragment_trailer_video) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentTrailerVideoBinding.bind(view)
-        trailerAdapter = TrailerAdapter()
+        trailerAdapter = TrailerAdapter { resultX ->
+            val intent = Intent(requireContext(), VideoActivity::class.java)
+            intent.putExtra("movie", resultX)
+            startActivity(intent)
+        }
         setUpRecyclerview()
 
         viewModel.getTrailers(apiKey = API_KEY, movieId = id.movieId)
