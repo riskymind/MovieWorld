@@ -19,16 +19,17 @@ class UpcomingFragmentViewModel @Inject constructor(
 
     val upComing: MutableLiveData<Resource<UpcomingMovieResponse>> = MutableLiveData()
     var page = 1
+    var upComingResponse: UpcomingMovieResponse? = null
 
     init {
         getUpcomingMovie(API_KEY)
     }
 
 
-    private fun getUpcomingMovie(apiKey: String) = viewModelScope.launch {
+    fun getUpcomingMovie(apiKey: String) = viewModelScope.launch {
         upComing.postValue(Resource.Loading())
         try {
-            val response = movieRepository.getUpcomingMovies(apiKey)
+            val response = movieRepository.getUpcomingMovies(apiKey, page)
             upComing.postValue(handleUpcomingResponse(response))
         } catch (e: Exception) {
             throw e
@@ -38,7 +39,15 @@ class UpcomingFragmentViewModel @Inject constructor(
     private fun handleUpcomingResponse(response: Response<UpcomingMovieResponse>): Resource<UpcomingMovieResponse> {
         if (response.isSuccessful) {
             response.body()?.let {
-                return Resource.Success(it)
+                page++
+                if (upComingResponse == null) {
+                    upComingResponse = it
+                } else {
+                    val oldUpcoming = upComingResponse?.results
+                    val newUpcoming = it.results
+                    oldUpcoming?.addAll(newUpcoming)
+                }
+                return Resource.Success(upComingResponse ?: it)
             }
         }
 

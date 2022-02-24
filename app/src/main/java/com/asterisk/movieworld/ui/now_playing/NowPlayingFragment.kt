@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.asterisk.movieworld.R
 import com.asterisk.movieworld.databinding.FragmentNowPlayingBinding
+import com.asterisk.movieworld.others.Constants.API_KEY
+import com.asterisk.movieworld.others.Constants.QUERY_PAGE_SIZE
 import com.asterisk.movieworld.others.Resource
 import com.asterisk.movieworld.shared.NowPlayingAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,7 +49,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let {
-                        movieAdapter.differ.submitList(it.results)
+                        movieAdapter.differ.submitList(it.results.toList())
                     }
                 }
 
@@ -72,7 +74,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
     var isLastPage = false
     var isScrolling = false
 
-    val rvScrollListener = object : RecyclerView.OnScrollListener() {
+    private val rvScrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
             // checking if it scrolling
@@ -83,6 +85,27 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
+
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+            val visibleItemCount = layoutManager.childCount
+            val totalItemCount = layoutManager.itemCount
+
+
+            val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
+            val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItemCount
+            val isNotAtBeginning = firstVisibleItemPosition >= 0
+            val isTotalMoreThanVisible = totalItemCount >= QUERY_PAGE_SIZE
+
+            val shouldPaginate = isNotLoadingAndNotLastPage
+                    && isAtLastItem
+                    && isNotAtBeginning
+                    && isTotalMoreThanVisible
+                    && isScrolling
+            if (shouldPaginate) {
+                viewModel.getNowPlaying(API_KEY)
+                isScrolling = false
+            }
         }
     }
 
@@ -90,6 +113,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
         binding.rvMovies.apply {
             adapter = movieAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            addOnScrollListener(rvScrollListener)
         }
     }
 

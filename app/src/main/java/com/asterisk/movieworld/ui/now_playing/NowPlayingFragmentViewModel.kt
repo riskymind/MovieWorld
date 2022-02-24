@@ -27,7 +27,7 @@ class NowPlayingFragmentViewModel @Inject constructor(
     }
 
 
-    private fun getNowPlaying(apiKey: String) = viewModelScope.launch {
+    fun getNowPlaying(apiKey: String) = viewModelScope.launch {
         nowPlaying.postValue(Resource.Loading())
         try {
             val response = movieRepository.getNowPlaying(apiKey, page)

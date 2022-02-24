@@ -25,6 +25,6 @@ class MovieRepository @Inject constructor(
     suspend fun getMoviesCredit(apiKey: String, movieId: String) =
         movieApi.getMovieCredit(movieId = movieId, apiKey = apiKey)
 
-    suspend fun getUpcomingMovies(apiKey: String) =
-        movieApi.getUpcomingMovies(apiKey = apiKey)
+    suspend fun getUpcomingMovies(apiKey: String, page: Int) =
+        movieApi.getUpcomingMovies(apiKey = apiKey, page = page)
 }

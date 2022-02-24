@@ -2,13 +2,17 @@ package com.asterisk.movieworld.ui.saves
 
 import android.os.Bundle
 import android.view.View
+import android.widget.AbsListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.asterisk.movieworld.R
 import com.asterisk.movieworld.databinding.FragmentUpcomingMoviesBinding
+import com.asterisk.movieworld.others.Constants
+import com.asterisk.movieworld.others.Constants.API_KEY
 import com.asterisk.movieworld.others.Resource
 import com.asterisk.movieworld.shared.NowPlayingAdapter
 import com.asterisk.movieworld.ui.now_playing.NowPlayingFragmentDirections
@@ -30,8 +34,7 @@ class UpcomingMoviesFragment : Fragment(R.layout.fragment_upcoming_movies) {
 
         upcomingAdapter = NowPlayingAdapter {
             val action =
-                UpcomingMoviesFragmentDirections.
-                actionSaveMoviesFragmentToMovieDetailFragment(it.id.toString())
+                UpcomingMoviesFragmentDirections.actionSaveMoviesFragmentToMovieDetailFragment(it.id.toString())
             findNavController().navigate(action)
         }
 
@@ -42,7 +45,7 @@ class UpcomingMoviesFragment : Fragment(R.layout.fragment_upcoming_movies) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let {
-                        upcomingAdapter.differ.submitList(it.results)
+                        upcomingAdapter.differ.submitList(it.results.toList())
                     }
                 }
 
@@ -62,10 +65,50 @@ class UpcomingMoviesFragment : Fragment(R.layout.fragment_upcoming_movies) {
         }
     }
 
+    var isLoading = false
+    var isLastPage = false
+    var isScrolling = false
+
+    private val rvScrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            // checking if it scrolling
+            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                isScrolling = true
+            }
+        }
+
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+            val visibleItemCount = layoutManager.childCount
+            val totalItemCount = layoutManager.itemCount
+
+
+            val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
+            val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItemCount
+            val isNotAtBeginning = firstVisibleItemPosition >= 0
+            val isTotalMoreThanVisible = totalItemCount >= Constants.QUERY_PAGE_SIZE
+
+            val shouldPaginate = isNotLoadingAndNotLastPage
+                    && isAtLastItem
+                    && isNotAtBeginning
+                    && isTotalMoreThanVisible
+                    && isScrolling
+            if (shouldPaginate) {
+                viewModel.getUpcomingMovie(API_KEY)
+                isScrolling = false
+            }
+        }
+    }
+
     private fun setUpRecyclerView() {
         binding.rvMovies.apply {
             adapter = upcomingAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            addOnScrollListener(rvScrollListener)
         }
     }
 
