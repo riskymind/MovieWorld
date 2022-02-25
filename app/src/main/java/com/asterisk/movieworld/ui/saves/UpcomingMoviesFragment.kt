@@ -34,7 +34,9 @@ class UpcomingMoviesFragment : Fragment(R.layout.fragment_upcoming_movies) {
 
         upcomingAdapter = NowPlayingAdapter {
             val action =
-                UpcomingMoviesFragmentDirections.actionSaveMoviesFragmentToMovieDetailFragment(it.id.toString())
+                UpcomingMoviesFragmentDirections.actionSaveMoviesFragmentToMovieDetailFragment(
+                    it.id.toString(), it.originalTitle
+                )
             findNavController().navigate(action)
         }
 

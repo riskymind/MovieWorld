@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/nowPlayingFragment"
         android:name="com.asterisk.movieworld.ui.now_playing.NowPlayingFragment"
-        android:label="fragment_now_playing"
-        tools:layout="@layout/fragment_now_playing" >
+        android:label="@string/now_playing_text"
+        tools:layout="@layout/fragment_now_playing">
         <action
             android:id="@+id/action_nowPlayingFragment_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/upcomingMoviesFragment"
         android:name="com.asterisk.movieworld.ui.saves.UpcomingMoviesFragment"
-        android:label="fragment_upcoming_movies"
+        android:label="@string/upcoming"
         tools:layout="@layout/fragment_upcoming_movies">
         <action
             android:id="@+id/action_saveMoviesFragment_to_movieDetailFragment"
@@ -26,8 +26,8 @@
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="com.asterisk.movieworld.ui.details.MovieDetailFragment"
-        android:label="fragment_movie_detail"
-        tools:layout="@layout/fragment_movie_detail" >
+        android:label="{title}"
+        tools:layout="@layout/fragment_movie_detail">
         <action
             android:id="@+id/action_movieDetailFragment_to_trailerVideoFragment"
             app:destination="@id/trailerVideoFragment" />
@@ -37,12 +37,15 @@
         <action
             android:id="@+id/action_movieDetailFragment_to_similarDialog"
             app:destination="@id/similarDialog" />
+        <argument
+            android:name="title"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/trailerVideoFragment"
         android:name="com.asterisk.movieworld.ui.trailer.TrailerVideoFragment"
-        android:label="fragment_trailer_video"
-        tools:layout="@layout/fragment_trailer_video" >
+        android:label="@string/trailer"
+        tools:layout="@layout/fragment_trailer_video">
         <argument
             android:name="movieId"
             app:argType="string" />
@@ -50,7 +53,7 @@
     <dialog
         android:id="@+id/similarDialog"
         android:name="com.asterisk.movieworld.ui.details.SimilarDialog"
-        android:label="SimilarDialog" >
+        android:label="SimilarDialog">
         <argument
             android:name="movieId"
             app:argType="string" />
