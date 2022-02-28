@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_now_playing">
         <action
             android:id="@+id/action_nowPlayingFragment_to_movieDetailFragment"
-            app:destination="@id/movieDetailFragment" />
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/upcomingMoviesFragment"
@@ -21,7 +25,11 @@
         tools:layout="@layout/fragment_upcoming_movies">
         <action
             android:id="@+id/action_saveMoviesFragment_to_movieDetailFragment"
-            app:destination="@id/movieDetailFragment" />
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
@@ -30,7 +38,11 @@
         tools:layout="@layout/fragment_movie_detail">
         <action
             android:id="@+id/action_movieDetailFragment_to_trailerVideoFragment"
-            app:destination="@id/trailerVideoFragment" />
+            app:destination="@id/trailerVideoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <argument
             android:name="movieId"
             app:argType="string" />

@@ -10,8 +10,10 @@ import androidx.navigation.fragment.navArgs
 import com.asterisk.movieworld.R
 import com.asterisk.movieworld.databinding.FragmentTrailerVideoBinding
 import com.asterisk.movieworld.others.Constants.API_KEY
+import com.asterisk.movieworld.others.NetworkUtil
 import com.asterisk.movieworld.others.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -22,6 +24,9 @@ class TrailerVideoFragment : Fragment(R.layout.fragment_trailer_video) {
 
     private val viewModel by viewModels<TrailerFragmentViewModel>()
     private val id by navArgs<TrailerVideoFragmentArgs>()
+
+    @Inject
+    lateinit var networkUtil: NetworkUtil
 
     private lateinit var trailerAdapter: TrailerAdapter
 
@@ -35,7 +40,12 @@ class TrailerVideoFragment : Fragment(R.layout.fragment_trailer_video) {
         }
         setUpRecyclerview()
 
-        viewModel.getTrailers(apiKey = API_KEY, movieId = id.movieId)
+
+
+        if (networkUtil.isConnected()) {
+            viewModel.getTrailers(apiKey = API_KEY, movieId = id.movieId)
+        }
+
 
         viewModel.trailers.observe(viewLifecycleOwner) { response ->
             when (response) {

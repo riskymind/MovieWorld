@@ -13,9 +13,11 @@ import com.asterisk.movieworld.R
 import com.asterisk.movieworld.databinding.FragmentNowPlayingBinding
 import com.asterisk.movieworld.others.Constants.API_KEY
 import com.asterisk.movieworld.others.Constants.QUERY_PAGE_SIZE
+import com.asterisk.movieworld.others.NetworkUtil
 import com.asterisk.movieworld.others.Resource
 import com.asterisk.movieworld.shared.MovieWorldAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint

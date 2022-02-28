@@ -21,12 +21,14 @@ import com.asterisk.movieworld.R
 import com.asterisk.movieworld.data.services.tdbmmodel.MovieDetailResponse
 import com.asterisk.movieworld.databinding.FragmentMovieDetailBinding
 import com.asterisk.movieworld.others.Constants.API_KEY
+import com.asterisk.movieworld.others.NetworkUtil
 import com.asterisk.movieworld.others.Resource
 import com.bumptech.glide.Glide
 import com.devs.readmoreoption.ReadMoreOption
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
@@ -41,6 +43,9 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
 
     private val id by navArgs<MovieDetailFragmentArgs>()
 
+    @Inject
+    lateinit var networkUtil: NetworkUtil
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMovieDetailBinding.bind(view)
@@ -50,9 +55,13 @@ class MovieDetailFragment : Fragment(R.layout.fragment_movie_detail) {
         setUpRecyclerView()
 
 
-        viewModel.getMovieDetail(apiKey = API_KEY, movieId = id.movieId)
-        viewModel.getMovieImages(apiKey = API_KEY, movieId = id.movieId)
-        viewModel.getMovieCredit(apiKey = API_KEY, movieId = id.movieId)
+        if (networkUtil.isConnected()) {
+            viewModel.getMovieDetail(apiKey = API_KEY, movieId = id.movieId)
+            viewModel.getMovieImages(apiKey = API_KEY, movieId = id.movieId)
+            viewModel.getMovieCredit(apiKey = API_KEY, movieId = id.movieId)
+        }
+
+
 
         viewModel.movieImages.observe(viewLifecycleOwner) { response ->
             when (response) {

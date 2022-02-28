@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.asterisk.movieworld.data.MovieRepository
 import com.asterisk.movieworld.data.services.tdbmmodel.UpcomingMovieResponse
 import com.asterisk.movieworld.others.Constants.API_KEY
+import com.asterisk.movieworld.others.NetworkUtil
 import com.asterisk.movieworld.others.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UpcomingFragmentViewModel @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository,
+    private val networkUtil: NetworkUtil
 ) : ViewModel() {
 
     val upComing: MutableLiveData<Resource<UpcomingMovieResponse>> = MutableLiveData()
@@ -22,7 +24,12 @@ class UpcomingFragmentViewModel @Inject constructor(
     var upComingResponse: UpcomingMovieResponse? = null
 
     init {
-        getUpcomingMovie(API_KEY)
+        if (networkUtil.isConnected()) {
+            getUpcomingMovie(API_KEY)
+        } else {
+            upComing.postValue(Resource.Error("there is no network connection"))
+        }
+
     }
 
 

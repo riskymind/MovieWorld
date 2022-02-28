@@ -1,11 +1,14 @@
 package com.asterisk.movieworld.ui.now_playing
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.asterisk.movieworld.data.MovieRepository
 import com.asterisk.movieworld.data.services.tdbmmodel.MovieResponse
 import com.asterisk.movieworld.others.Constants.API_KEY
+import com.asterisk.movieworld.others.NetworkUtil
 import com.asterisk.movieworld.others.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NowPlayingFragmentViewModel @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository,
+    private val networkUtil: NetworkUtil
 ) : ViewModel() {
 
     val nowPlaying: MutableLiveData<Resource<MovieResponse>> = MutableLiveData()
@@ -23,7 +27,12 @@ class NowPlayingFragmentViewModel @Inject constructor(
 
 
     init {
-        getNowPlaying(API_KEY)
+        if (networkUtil.isConnected()) {
+            getNowPlaying(API_KEY)
+        } else {
+            nowPlaying.postValue(Resource.Error(message = "there is no network connection"))
+        }
+
     }
 
 
