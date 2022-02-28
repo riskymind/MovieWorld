@@ -1,11 +1,8 @@
 package com.asterisk.movieworld.ui.now_playing
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -17,14 +14,14 @@ import com.asterisk.movieworld.databinding.FragmentNowPlayingBinding
 import com.asterisk.movieworld.others.Constants.API_KEY
 import com.asterisk.movieworld.others.Constants.QUERY_PAGE_SIZE
 import com.asterisk.movieworld.others.Resource
-import com.asterisk.movieworld.shared.NowPlayingAdapter
+import com.asterisk.movieworld.shared.MovieWorldAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
 
-    private lateinit var movieAdapter: NowPlayingAdapter
+    private lateinit var mMovieAdapter: MovieWorldAdapter
 
     private var _binding: FragmentNowPlayingBinding? = null
     private val binding get() = _binding!!
@@ -36,7 +33,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
 
         _binding = FragmentNowPlayingBinding.bind(view)
 
-        movieAdapter = NowPlayingAdapter {
+        mMovieAdapter = MovieWorldAdapter {
             val action =
                 NowPlayingFragmentDirections.actionNowPlayingFragmentToMovieDetailFragment(
                     it.id.toString(), it.originalTitle
@@ -51,7 +48,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let {
-                        movieAdapter.differ.submitList(it.results.toList())
+                        mMovieAdapter.differ.submitList(it.results.toList())
                     }
                 }
 
@@ -113,7 +110,7 @@ class NowPlayingFragment : Fragment(R.layout.fragment_now_playing) {
 
     private fun setUpRecyclerView() {
         binding.rvMovies.apply {
-            adapter = movieAdapter
+            adapter = mMovieAdapter
             layoutManager = LinearLayoutManager(requireContext())
             addOnScrollListener(rvScrollListener)
         }

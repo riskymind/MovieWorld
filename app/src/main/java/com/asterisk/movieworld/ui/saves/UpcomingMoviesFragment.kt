@@ -14,9 +14,7 @@ import com.asterisk.movieworld.databinding.FragmentUpcomingMoviesBinding
 import com.asterisk.movieworld.others.Constants
 import com.asterisk.movieworld.others.Constants.API_KEY
 import com.asterisk.movieworld.others.Resource
-import com.asterisk.movieworld.shared.NowPlayingAdapter
-import com.asterisk.movieworld.ui.now_playing.NowPlayingFragmentDirections
-import com.asterisk.movieworld.ui.now_playing.NowPlayingFragmentViewModel
+import com.asterisk.movieworld.shared.MovieWorldAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,14 +23,14 @@ class UpcomingMoviesFragment : Fragment(R.layout.fragment_upcoming_movies) {
     private var _binding: FragmentUpcomingMoviesBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var upcomingAdapter: NowPlayingAdapter
+    private lateinit var mUpcomingAdapter: MovieWorldAdapter
     private val viewModel by viewModels<UpcomingFragmentViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentUpcomingMoviesBinding.bind(view)
 
-        upcomingAdapter = NowPlayingAdapter {
+        mUpcomingAdapter = MovieWorldAdapter {
             val action =
                 UpcomingMoviesFragmentDirections.actionSaveMoviesFragmentToMovieDetailFragment(
                     it.id.toString(), it.originalTitle
@@ -47,7 +45,7 @@ class UpcomingMoviesFragment : Fragment(R.layout.fragment_upcoming_movies) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let {
-                        upcomingAdapter.differ.submitList(it.results.toList())
+                        mUpcomingAdapter.differ.submitList(it.results.toList())
                     }
                 }
 
@@ -108,7 +106,7 @@ class UpcomingMoviesFragment : Fragment(R.layout.fragment_upcoming_movies) {
 
     private fun setUpRecyclerView() {
         binding.rvMovies.apply {
-            adapter = upcomingAdapter
+            adapter = mUpcomingAdapter
             layoutManager = LinearLayoutManager(requireContext())
             addOnScrollListener(rvScrollListener)
         }

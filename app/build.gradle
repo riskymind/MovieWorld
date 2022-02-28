@@ -82,4 +82,7 @@ dependencies {
 
     // Show More text
     implementation 'com.github.devendroid:ReadMoreOption:1.0.2'
+
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
+//    implementation 'androidx.core:core-splashscreen:1.0.0-alpha02'
 }

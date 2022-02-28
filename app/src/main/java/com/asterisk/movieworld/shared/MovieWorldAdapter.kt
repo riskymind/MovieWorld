@@ -13,9 +13,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
-class NowPlayingAdapter(
+class MovieWorldAdapter(
     private val onItemClicked: (Result) -> Unit
-) : RecyclerView.Adapter<NowPlayingAdapter.MovieViewHolder>() {
+) : RecyclerView.Adapter<MovieWorldAdapter.MovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val layout = MovieItemBinding.inflate(
